@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <h4>Back to the home page</h4>
+        <a href="/"> Home </a>
+    <table style="background-color: lightblue" border="1" cellpadding="7" cellspacing="7">
+      <tr>
+        <th width="40px">No</th>
+        <th>Movie Name</th>
+        
+      </tr>
+      <% if(data.length){ 
+        for(var i = 0;i < data.length;i++) { %>
+      <tr>
+        <td><%=(i+1)%></td>
+        <td><%=data[i]%></td>
+      </tr>
+      <% }
+      }else{ %>
+      <tr>
+        <td colspan="3">No Movie</td>
+      </tr>
+    <% } %>
+    </table>
+    </body></html>
