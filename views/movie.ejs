@@ -93,43 +93,26 @@ select[type=submit] {
 
 
 
-<form autocomplete="off" action="/get_movie" method="POST">
+<form autocomplete="off" action="/get_movie_details" method="POST">
   <div class="autocomplete" style="width:300px;">
-    <label for="by">Search Movie By:</label>
-    <select id="by" name="type">
-    <option value="A">All</option>
-    <option value="B">Producer</option>
-    <option value="C">Actor/Actress</option>
-
-    </select>
+    <label for="by">Search Details of Movie:</label>
     <p></p>
-    <input id="myInput" type="text" name="Movie" placeholder="Actor/Director">
+    <input id="myInput" type="text" name="Movie" placeholder="Movie">
 
   </div>
   <input type="submit">
 </form>
 <p></p>
-<a href="/movie"> Search all details of movie</a>
+<a href="/"> Search Movie by Actor/Producer</a>
 </div>
 <script>
 function autocomplete(inp) {
 
   var currentFocus;
-  var arr=[];
-
+  var arr=Movie;
+  
   inp.addEventListener("input", function(e) {
-        var c=document.getElementById("by").value;
-      //console.log(c);
       
-      if(c=='A'){
-        arr=All;
-      }
-      else if(c=='B'){
-        arr=Direct;
-      }
-      else{
-        arr=Act;
-      }
       var a, b, i, val = this.value;
 
       closeAllLists();
@@ -215,9 +198,8 @@ function autocomplete(inp) {
 }
 
 
-var Act= <%-JSON.stringify(Actor)%> ;
-var Direct= <%-JSON.stringify(director)%> ;
-var All= <%-JSON.stringify(all)%> ;
+var Movie= <%-JSON.stringify(Movie)%> ;
+
 autocomplete(document.getElementById("myInput"));
 
 </script>

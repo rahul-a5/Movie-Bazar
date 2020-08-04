@@ -19,6 +19,7 @@ var session =driver.session();
 var act=[];
 var all=[];
 var director=[];
+var movie=[];
 app.get('/',function(req,res){
     if(act.length==0){
     session
@@ -37,8 +38,8 @@ app.get('/',function(req,res){
                     director.push(records._fields[0].properties.Name);
                     all.push(records._fields[0].properties.Name);
                 });
-                console.log(act.length);
-                console.log(director.length);
+                //console.log(act.length);
+                //console.log(director.length);
                 res.render('render.ejs',{Actor:act,director:director,all:all});
             })
             })
@@ -51,6 +52,29 @@ app.get('/',function(req,res){
         res.render('render.ejs',{Actor:act,director:director,all:all});}
 });
 
+
+app.get('/movie',function(req,res){
+    if(movie.length==0){
+    session
+
+        .run('Match(n:Movie) return n ')
+        .then(function(result){
+            
+            result.records.forEach(function(records){
+                movie.push(records._fields[0].properties.Title);
+            });
+            
+            res.render('movie.ejs',{Movie:movie});
+        })
+        
+        .catch(function(err){
+            console.log(err);
+        });}
+    else{
+        console.log(movie.length);
+        res.render('movie.ejs',{Movie:movie});
+    }
+});
 
 app.post('/get_movie',function(req,res){
     var ty=req.body.type;
@@ -112,6 +136,57 @@ app.post('/get_movie',function(req,res){
         
 
      }
+});
+
+
+app.post('/get_movie_details',function(req,res){
+    var name=req.body.Movie;
+    console.log(name);
+    var act=[];
+    var director,release,genre,runtime;
+    session
+            .run('match (n:Movie{Title:"'+name+'"})-[r]-(n1:Joker) return n1')
+            .then(function(result){
+                result.records.forEach(function(records){
+                    act.push(records._fields[0].properties.name);
+                });
+                session.run('match (n:Movie{Title:"'+name+'"})-[r]-(n1:Director) return n1')
+                .then(function(result){
+                    result.records.forEach(function(records){
+                        director=records._fields[0].properties.Name;
+                    });
+                    session.run('match (n:Movie{Title:"'+name+'"})-[r]-(n1:year) return n1')
+                    .then(function(result){
+                        result.records.forEach(function(records){
+                            release=records._fields[0].properties.Year;
+                        });
+                        session.run('match (n:Movie{Title:"'+name+'"})-[r]-(n1:Genre) return n1')
+                        .then(function(result){
+                            result.records.forEach(function(records){
+                                genre=records._fields[0].properties.type;
+                            });
+                            session.run('match (n:Movie{Title:"'+name+'"})-[r]-(n1:Duration) return n1')
+                            .then(function(result){
+                                result.records.forEach(function(records){
+                                    runtime=records._fields[0].properties.Time;
+                                });
+                                //console.log(director,release,genre,runtime);
+                                //console.log(act);
+                                res.render('movie_detail.ejs',{Actor:act,Director:director,Year:release,Genre:genre,Duration:runtime});
+                            })
+                        })
+                    })
+
+                })
+            })
+            .catch(function(err){
+                if(err){
+                    throw err;
+                }
+            });
+
+        
+
 });
 
 

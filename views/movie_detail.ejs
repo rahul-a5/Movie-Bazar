@@ -1,0 +1,65 @@
+<html>
+    <body>
+        <h4>Back to the home page</h4>
+        <a href="/movie"> Home </a>
+    <table style="background-color: lightblue" border="1" cellpadding="7" cellspacing="7">
+      <tr>
+        <th width="40px">No</th>
+        <th>Actor Names</th>
+        
+      </tr>
+      <% if(Actor.length){ 
+        for(var i = 0;i < Actor.length;i++) { %>
+      <tr>
+        <td><%=(i+1)%></td>
+        <td><%=Actor[i]%></td>
+      </tr>
+      <% }
+      }else{ %>
+      <tr>
+        <td colspan="3">No Movie</td>
+      </tr>
+    <% } %>
+    </table>
+    <table style="background-color: lightblue" border="1" cellpadding="7" cellspacing="7">
+        <tr>
+          
+            <th>Director</th>
+            
+        </tr>
+        <tr>
+            <td><%=Director%></td>
+        </tr>
+    </table>
+    <table style="background-color: lightblue" border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            
+            <th>Duration</th>
+            
+        </tr>
+        <tr>
+            <td><%=Duration%></td>
+        </tr>
+    </table>
+    <table style="background-color: lightblue" border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            
+            <th>Genre</th>
+            
+        </tr>
+        <tr>
+            <td><%=Genre%></td>
+        </tr>
+    </table>
+    <table style="background-color: lightblue" border="1" cellpadding="7" cellspacing="7">
+        <tr>
+           
+            <th>Released Year</th>
+            
+        </tr>
+        <tr>
+            <td><%=Year%></td>
+        </tr>
+    </table>
+
+</body></html>
